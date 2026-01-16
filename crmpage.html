@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en-IN" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>CRM Operations Training | Voice & Non-Voice</title>
+
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;600;700&family=Syncopate:wght@400;700&display=swap");
+
+      :root {
+        --neon-orange: #ff6b35;
+        --bg-dark: #050505;
+        --glass: rgba(20, 20, 25, 0.8);
+        --glass-border: rgba(255, 255, 255, 0.1);
+      }
+
+      body {
+        font-family: "Rajdhani", sans-serif;
+        background-color: var(--bg-dark);
+        color: #ffffff;
+        overflow-x: hidden;
+        cursor: none; 
+      }
+
+      /* RESTORE CURSOR ON TOUCH DEVICES */
+      @media (hover: none) and (pointer: coarse) {
+          body { cursor: auto !important; }
+          .cursor-dot, .cursor-ring { display: none !important; }
+      }
+
+      h1, h2, h3, .brand-font {
+        font-family: "Syncopate", sans-serif;
+      }
+
+      /* =========================================
+         FIXED NAVBAR STYLES
+         ========================================= */
+      .nav-cyber {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        z-index: 9999 !important;
+        background: rgba(5, 5, 8, 0.9);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 107, 53, 0.3);
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+        transition: all 0.3s ease;
+      }
+
+      .nav-cyber::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--neon-orange), transparent);
+        opacity: 0.8;
+      }
+
+/* UPDATED NAV LINK STYLE (Matches About Page) */
+    .nav-link {
+      position: relative;
+      font-size: 1.1rem; /* Increased from 0.8rem */
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 800; /* Increased from 700 */
+      color: #888;
+      transition: color 0.3s ease;
+      padding: 0.5rem 0;
+    }
+      .nav-link:hover { color: #fff; }
+      .nav-link::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--neon-orange);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+        box-shadow: 0 0 10px var(--neon-orange);
+      }
+      .nav-link:hover::before { width: 100%; }
+
+      /* Tech Button */
+      .btn-cyber {
+        position: relative;
+        background: transparent;
+        border: 1px solid var(--neon-orange);
+        color: var(--neon-orange);
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 10px 24px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+      }
+      .btn-cyber:hover {
+        background: var(--neon-orange);
+        color: #000;
+        box-shadow: 0 0 30px rgba(255, 107, 53, 0.4);
+      }
+
+      /* MOBILE MENU OVERLAY */
+      #mobileMenu {
+        position: fixed;
+        top: 70px; /* Below navbar */
+        left: 0;
+        width: 100%;
+        height: 0;
+        background: rgba(0,0,0,0.95);
+        backdrop-filter: blur(15px);
+        overflow: hidden;
+        z-index: 9998;
+        transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        border-bottom: 1px solid var(--neon-orange);
+      }
+      #mobileMenu.active {
+        height: calc(100vh - 70px);
+      }
+
+      /* =========================================
+         PROFESSIONAL PRECISION CURSOR
+         ========================================= */
+      .cursor-dot,
+      .cursor-ring {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      .cursor-dot {
+        width: 6px;
+        height: 6px;
+        background-color: #ffffff;
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        z-index: 10000;
+      }
+
+      .cursor-ring {
+        width: 32px;
+        height: 32px;
+        border: 1px solid rgba(255, 107, 53, 0.6);
+        transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+      }
+
+      body.hover-active .cursor-ring {
+        width: 50px;
+        height: 50px;
+        background-color: rgba(255, 107, 53, 0.1);
+        border-color: var(--neon-orange);
+        mix-blend-mode: screen;
+      }
+      
+      /* --- BACKGROUND LAYERS --- */
+      .bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -50; background: radial-gradient( circle at 50% 50%, rgba(26, 11, 0, 0.85) 0%, rgba(0, 0, 0, 0.95) 100% ); }
+      .grid-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -40; background-image: linear-gradient( rgba(255, 107, 53, 0.03) 1px, transparent 1px ), linear-gradient(90deg, rgba(255, 107, 53, 0.03) 1px, transparent 1px); background-size: 40px 40px; mask-image: radial-gradient(circle, black 40%, transparent 100%); }
+      #globalCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -30; mix-blend-mode: color-dodge; }
+
+      /* --- Hero Typography --- */
+      .text-liquid-neon { background: linear-gradient( 90deg, #ffffff 0%, var(--neon-orange) 20%, #ffffff 40%, var(--neon-orange) 60%, #ffffff 80%, var(--neon-orange) 100% ); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: liquidFlow 4s linear infinite; }
+      @keyframes liquidFlow { to { background-position: 200% center; } }
+      .text-hollow { color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.6); }
+
+      /* =========================================
+         CYBER TABS & CONTENT STYLES
+         ========================================= */
+      .tabs-container {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 4rem;
+          position: relative;
+          z-index: 10;
+      }
+      
+      .cyber-tabs {
+          display: flex;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 50px;
+          padding: 6px;
+          position: relative;
+          overflow: hidden;
+      }
+
+      .tab-btn {
+          padding: 12px 30px;
+          border-radius: 40px;
+          font-family: "Syncopate", sans-serif;
+          font-weight: 700;
+          text-transform: uppercase;
+          font-size: 0.9rem;
+          color: #888;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          position: relative;
+          z-index: 2;
+          border: none;
+          background: transparent;
+      }
+
+      .tab-btn.active {
+          color: #000;
+      }
+
+      .tab-highlighter {
+          position: absolute;
+          top: 6px;
+          left: 6px;
+          height: calc(100% - 12px);
+          background: var(--neon-orange);
+          border-radius: 40px;
+          transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+          z-index: 1;
+          box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+      }
+
+      /* Module Cards */
+      .module-card {
+          background: rgba(10, 10, 10, 0.8);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 16px;
+          padding: 2rem;
+          position: relative;
+          overflow: hidden;
+          transition: all 0.4s ease;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+      }
+
+      .module-card::before {
+          content: '';
+          position: absolute;
+          top: 0; left: 0; width: 100%; height: 4px;
+          background: linear-gradient(90deg, var(--neon-orange), transparent);
+          opacity: 0.5;
+          transition: 0.3s;
+      }
+
+      .module-card:hover {
+          transform: translateY(-10px);
+          border-color: rgba(255, 107, 53, 0.4);
+          box-shadow: 0 15px 40px -10px rgba(0,0,0,0.8);
+      }
+      .module-card:hover::before { opacity: 1; height: 6px; }
+
+      .module-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 1.5rem;
+      }
+      
+.module-number {
+          font-family: monospace;
+          color: var(--neon-orange);
+          font-size: 1.5rem;
+          letter-spacing: 1px;
+          opacity: 0.8;
+          font-weight: bold;
+          text-transform: uppercase;
+      }
+
+      .module-icon {
+          font-size: 1.5rem;
+          color: #fff;
+          width: 40px; height: 40px;
+          background: rgba(255,255,255,0.05);
+          border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+      }
+
+      .module-title {
+          font-family: "Syncopate", sans-serif;
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: #fff;
+          margin-bottom: 1rem;
+          line-height: 1.4;
+      }
+
+      .module-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          flex-grow: 1;
+      }
+      
+      .module-list li {
+          position: relative;
+          padding-left: 20px;
+          margin-bottom: 0.8rem;
+          font-size: 0.9rem;
+          color: #aaa;
+          line-height: 1.5;
+      }
+      
+      .module-list li::before {
+          content: '>';
+          position: absolute;
+          left: 0;
+          color: var(--neon-orange);
+          font-family: monospace;
+      }
+
+      /* Track Containers */
+      .track-content {
+          display: none;
+          animation: fadeIn 0.5s ease;
+      }
+      .track-content.active {
+          display: block;
+      }
+
+      @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+      }
+
+    </style>
+  </head>
+  <body class="selection:bg-orange-500 selection:text-white">
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <div class="bg-container"></div>
+    <div class="grid-overlay"></div>
+    <canvas id="globalCanvas"></canvas>
+
+    <div id="mobileMenu">
+      <div class="flex flex-col items-center justify-center h-full gap-8 p-6">
+         <a href="index.html" class="text-2xl font-bold uppercase tracking-widest text-white hover:text-orange-500 transition mobile-link">Home</a>
+         <a href="index.html#courses" class="text-2xl font-bold uppercase tracking-widest text-white hover:text-orange-500 transition mobile-link">Courses</a>
+         <a href="about.html" class="text-2xl font-bold uppercase tracking-widest text-white hover:text-orange-500 transition mobile-link">About</a>
+         <a href="index.html#contact" class="text-2xl font-bold uppercase tracking-widest text-white hover:text-orange-500 transition mobile-link">Contact</a>
+      </div>
+    </div>
+
+    <nav class="nav-cyber" id="navbar">
+      <div class="container mx-auto px-6 py-0 flex justify-between items-center">
+        
+        <a href="index.html" class="flex items-center gap-2">
+          <img src="logo.png" alt="Sambhav Foundation" class="h-16 md:h-20 w-auto object-contain filter drop-shadow-[0_0_5px_rgba(255,107,53,0.5)] transition-transform hover:scale-105">
+        </a>
+
+        <div class="hidden lg:flex items-center gap-10">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="index.html#courses" class="nav-link">Courses</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="#facilities" class="nav-link">Facilities</a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </div>
+
+        <div class="hidden lg:block">
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSf3TifgrN-xKDXHvjTF2yB8ps6-02lbZhcPyoq34xTgILMQPg/viewform?usp=header"
+            target="_blank"
+            class="btn-cyber"
+          >
+            Enroll Now
+          </a>
+        </div>
+
+        <button id="mobileToggle" class="lg:hidden text-2xl text-orange-500 hover:text-white transition z-50">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+
+    <section class="relative pt-32 pb-16 flex flex-col items-center justify-center text-center overflow-hidden">
+       <div class="container mx-auto px-6 relative z-10">
+          <div class="inline-flex items-center gap-4 px-4 py-1 mb-6 border border-white/10 rounded-full bg-black/40 backdrop-blur-md">
+            <span class="text-xs tracking-[0.2em] text-gray-300 font-medium uppercase">
+               Integrated Operations Module
+            </span>
+          </div>
+
+          <h1 class="font-bold leading-none mb-6">
+            <span class="block text-4xl md:text-6xl brand-font text-liquid-neon mb-4">
+              CRM SPECIALIST
+            </span>
+            <span class="block text-xl md:text-3xl text-hollow opacity-80 tracking-widest">
+              TRAINING PROTOCOLS
+            </span>
+          </h1>
+
+          <p class="text-lg text-gray-400 font-light max-w-2xl mx-auto mb-10">
+             Comprehensive curriculum designed for high-performance Customer Relationship Management across both Voice and Non-Voice channels.
+          </p>
+       </div>
+    </section>
+
+    <section class="pb-20 min-h-screen">
+        <div class="container mx-auto px-6">
+            
+            <div class="tabs-container">
+                <div class="cyber-tabs">
+                    <div class="tab-highlighter" id="tabHighlighter"></div>
+                    <button class="tab-btn active" onclick="switchTab('voice', this)">Voice Ops</button>
+                    <button class="tab-btn" onclick="switchTab('nonvoice', this)">Non-Voice Ops</button>
+                </div>
+            </div>
+
+            <div id="voice-content" class="track-content active">
+                <div class="text-center mb-12">
+                    <h3 class="text-2xl font-bold text-white mb-2 brand-font">DOMESTIC VOICE <span class="text-orange-500">PROCESS</span></h3>
+                    <p class="text-gray-500 text-sm">Focus: Communication, Phonetics, and Call Handling [cite: 65-112]</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-01</span>
+                            <div class="module-icon"><i class="fas fa-language"></i></div>
+                        </div>
+                        <h4 class="module-title">Grammar Fundamentals</h4>
+                        <ul class="module-list">
+                            <li>Parts of Speech (Nouns, Verbs, etc.)</li>
+                            <li>Tenses & Subject-Verb Agreement</li>
+                            <li>Sentence Structure Types</li>
+                            <li>Articles & Prepositions</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-02</span>
+                            <div class="module-icon"><i class="fas fa-microphone-alt"></i></div>
+                        </div>
+                        <h4 class="module-title">Phonetics & Pronunciation</h4>
+                        <ul class="module-list">
+                            <li>Vowel & Consonant Sounds</li>
+                            <li>Stress & Intonation</li>
+                            <li>Accent Neutralization</li>
+                            <li>IPA & Articulation</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-03</span>
+                            <div class="module-icon"><i class="fas fa-book-reader"></i></div>
+                        </div>
+                        <h4 class="module-title">Reading Skills</h4>
+                        <ul class="module-list">
+                            <li>Scanning & Skimming Styles</li>
+                            <li>Comprehension & Interpretation</li>
+                            <li>Workplace Reading (Emails, Notices)</li>
+                            <li>Vocabulary Building</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-04</span>
+                            <div class="module-icon"><i class="fas fa-headset"></i></div>
+                        </div>
+                        <h4 class="module-title">Listening Skills</h4>
+                        <ul class="module-list">
+                            <li>Understanding Different Accents</li>
+                            <li>Active Listening for Gist</li>
+                            <li>Call Listening Practice</li>
+                            <li>Note-Taking Techniques</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-05</span>
+                            <div class="module-icon"><i class="fas fa-comments"></i></div>
+                        </div>
+                        <h4 class="module-title">Oral Communication</h4>
+                        <ul class="module-list">
+                            <li>Fluency & Confidence Building</li>
+                            <li>Clarity in Speech</li>
+                            <li>Conversation Etiquette</li>
+                            <li>Public Speaking & Role Plays</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-06</span>
+                            <div class="module-icon"><i class="fas fa-user-friends"></i></div>
+                        </div>
+                        <h4 class="module-title">Customer Conversations</h4>
+                        <ul class="module-list">
+                            <li>Handling Queries & Complaints</li>
+                            <li>Professional Telephone Etiquette</li>
+                            <li>CRM Scenario Role Plays</li>
+                            <li>Situational Dialogues</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-07</span>
+                            <div class="module-icon"><i class="fas fa-pen-fancy"></i></div>
+                        </div>
+                        <h4 class="module-title">Writing Skills</h4>
+                        <ul class="module-list">
+                            <li>Email Writing (Formal/Informal)</li>
+                            <li>Report & Documentation</li>
+                            <li>Sentence & Paragraph Structure</li>
+                            <li>Formatting Practice</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-08</span>
+                            <div class="module-icon"><i class="fas fa-briefcase"></i></div>
+                        </div>
+                        <h4 class="module-title">Voice Operations</h4>
+                        <ul class="module-list">
+                            <li>Outbound Call Handling</li>
+                            <li>Call Flows, Scripts & Closing</li>
+                            <li>Target Management</li>
+                            <li>Workplace Security & Safety</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="nonvoice-content" class="track-content">
+                <div class="text-center mb-12">
+                    <h3 class="text-2xl font-bold text-white mb-2 brand-font">DOMESTIC NON-VOICE <span class="text-orange-500">PROCESS</span></h3>
+                    <p class="text-gray-500 text-sm">Focus: Chat, Email, Data Handling, and Compliance [cite: 113-160]</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-01</span>
+                            <div class="module-icon"><i class="fas fa-desktop"></i></div>
+                        </div>
+                        <h4 class="module-title">Intro to Non-Voice</h4>
+                        <ul class="module-list">
+                            <li>Channels: Email, Chat, Social Media</li>
+                            <li>Customer Lifecycle & Expectations</li>
+                            <li>Roles & Responsibilities</li>
+                            <li>Work Ethics & Standards</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-02</span>
+                            <div class="module-icon"><i class="fas fa-keyboard"></i></div>
+                        </div>
+                        <h4 class="module-title">Business Writing</h4>
+                        <ul class="module-list">
+                            <li>Professional Email Writing</li>
+                            <li>Grammar & Sentence Clarity</li>
+                            <li>Customer Vocabulary Building</li>
+                            <li>Avoiding Writing Errors</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-03</span>
+                            <div class="module-icon"><i class="fas fa-comment-dots"></i></div>
+                        </div>
+                        <h4 class="module-title">Interaction Handling</h4>
+                        <ul class="module-list">
+                            <li>Chat Etiquette & Response Tech</li>
+                            <li>Ticketing & Case Management</li>
+                            <li>Email Handling & SLAs</li>
+                            <li>Escalation Protocols</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-04</span>
+                            <div class="module-icon"><i class="fas fa-star"></i></div>
+                        </div>
+                        <h4 class="module-title">Quality Management</h4>
+                        <ul class="module-list">
+                            <li>Empathy & Tone in Writing</li>
+                            <li>Quality Parameters & Audits</li>
+                            <li>Customer Satisfaction (CSAT)</li>
+                            <li>Managing Difficult Customers</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-05</span>
+                            <div class="module-icon"><i class="fas fa-tools"></i></div>
+                        </div>
+                        <h4 class="module-title">Tools & Documentation</h4>
+                        <ul class="module-list">
+                            <li>CRM Dashboards & Tools</li>
+                            <li>Knowledge Base & SOPs</li>
+                            <li>Ticketing Tools Usage</li>
+                            <li>Data Accuracy & Records</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-06</span>
+                            <div class="module-icon"><i class="fas fa-shield-alt"></i></div>
+                        </div>
+                        <h4 class="module-title">Security & Compliance</h4>
+                        <ul class="module-list">
+                            <li>Data Privacy & Confidentiality</li>
+                            <li>InfoSec in Non-Voice</li>
+                            <li>Industry Regulations</li>
+                            <li>Risk Management</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-07</span>
+                            <div class="module-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        </div>
+                        <h4 class="module-title">Productivity Skills</h4>
+                        <ul class="module-list">
+                            <li>Time Management & Multitasking</li>
+                            <li>Meeting SLAs & Targets</li>
+                            <li>Team Collaboration</li>
+                            <li>Stress Management</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-header">
+                            <span class="module-number">module-08</span>
+                            <div class="module-icon"><i class="fas fa-user-tie"></i></div>
+                        </div>
+                        <h4 class="module-title">Career Development</h4>
+                        <ul class="module-list">
+                            <li>Resume Building for CRM</li>
+                            <li>Interview Preparation</li>
+                            <li>Workplace Email Etiquette</li>
+                            <li>Career Opportunities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="py-8 border-t border-white/5 text-center text-gray-600 text-xs tracking-widest uppercase">
+      <p>&copy; 2026 Sambhav Foundation. Architecting the Future.</p>
+    </footer>
+
+    <script>
+      // 1. MOBILE MENU LOGIC
+      const mobileToggle = document.getElementById("mobileToggle");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const mobileLinks = document.querySelectorAll(".mobile-link");
+
+      if(mobileToggle) {
+          mobileToggle.addEventListener("click", () => {
+              mobileMenu.classList.toggle("active");
+              const icon = mobileToggle.querySelector("i");
+              if(mobileMenu.classList.contains("active")) {
+                  icon.classList.remove("fa-bars");
+                  icon.classList.add("fa-times");
+              } else {
+                  icon.classList.remove("fa-times");
+                  icon.classList.add("fa-bars");
+              }
+          });
+      }
+
+      mobileLinks.forEach(link => {
+          link.addEventListener("click", () => {
+              mobileMenu.classList.remove("active");
+              if(mobileToggle) {
+                mobileToggle.querySelector("i").classList.remove("fa-times");
+                mobileToggle.querySelector("i").classList.add("fa-bars");
+              }
+          });
+      });
+
+      // 2. TAB SWITCHER LOGIC
+      function switchTab(track, btn) {
+          // Remove active class from all buttons
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          // Add active class to clicked button
+          btn.classList.add('active');
+
+          // Move Highlighter
+          const highlighter = document.getElementById('tabHighlighter');
+          if (track === 'voice') {
+              highlighter.style.transform = 'translateX(0)';
+              highlighter.style.width = btn.offsetWidth + 'px';
+          } else {
+              // Calculate offset based on previous sibling width + padding/gap
+              const prevBtnWidth = btn.previousElementSibling.offsetWidth;
+              highlighter.style.transform = `translateX(${btn.offsetLeft - 6}px)`; // 6 is padding
+              highlighter.style.width = btn.offsetWidth + 'px';
+          }
+          
+          // Apply uniform orange style
+          highlighter.style.background = 'var(--neon-orange)';
+          highlighter.style.boxShadow = '0 0 20px rgba(255, 107, 53, 0.5)';
+
+          // Show/Hide Content
+          document.querySelectorAll('.track-content').forEach(c => c.classList.remove('active'));
+          document.getElementById(track + '-content').classList.add('active');
+          
+          // Animate Grid
+          gsap.fromTo(`#${track}-content .module-card`, 
+              { y: 20, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.4, stagger: 0.1 }
+          );
+      }
+
+      // Init Highlighter Size
+      window.onload = function() {
+          const firstBtn = document.querySelector('.tab-btn.active');
+          const highlighter = document.getElementById('tabHighlighter');
+          if(firstBtn && highlighter) {
+              highlighter.style.width = firstBtn.offsetWidth + 'px';
+          }
+      };
+
+      // 3. CURSOR LOGIC
+      const cursorDot = document.querySelector(".cursor-dot");
+      const cursorRing = document.querySelector(".cursor-ring");
+      let mouseX = 0;
+      let mouseY = 0;
+
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+      if (!isTouchDevice) {
+          window.addEventListener("mousemove", (e) => {
+              mouseX = e.clientX;
+              mouseY = e.clientY;
+
+              gsap.to(cursorDot, {
+                  x: mouseX,
+                  y: mouseY,
+                  duration: 0.1,
+                  ease: "power2.out"
+              });
+
+              gsap.to(cursorRing, {
+                  x: mouseX,
+                  y: mouseY,
+                  duration: 0.5,
+                  ease: "power2.out"
+              });
+          });
+
+          const interactiveElements = document.querySelectorAll(
+              "a, button, input, select, textarea, .module-card, .tab-btn"
+          );
+
+          interactiveElements.forEach((el) => {
+              el.addEventListener("mouseenter", () => {
+                  document.body.classList.add("hover-active");
+              });
+              el.addEventListener("mouseleave", () => {
+                  document.body.classList.remove("hover-active");
+              });
+          });
+      }
+
+      // 4. Global Background
+      const globalCanvas = document.getElementById("globalCanvas");
+      if (globalCanvas) {
+        const ctx = globalCanvas.getContext("2d");
+        let particles = [];
+        
+        function resizeCanvas() {
+          globalCanvas.width = window.innerWidth;
+          globalCanvas.height = window.innerHeight;
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+          constructor(x, y, isAmbient = false) {
+            this.x = x || Math.random() * globalCanvas.width;
+            this.y = y || Math.random() * globalCanvas.height;
+            this.size = Math.random() * (isAmbient ? 2 : 3.5) + 0.8;
+            this.speedX = (Math.random() * 1 - 0.5) * (isAmbient ? 0.3 : 0.8);
+            this.speedY = (Math.random() * 1 - 0.5) * (isAmbient ? 0.3 : 0.8);
+            this.life = isAmbient ? 1 : 1;
+            this.decay = isAmbient ? 0 : Math.random() * 0.01 + 0.005;
+            this.color = `hsla(${Math.random() * 25 + 15}, 100%, 70%, 0.9)`;
+            this.isAmbient = isAmbient;
+          }
+          update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (!this.isAmbient) this.life -= this.decay;
+            if (this.x > globalCanvas.width) this.x = 0;
+            if (this.x < 0) this.x = globalCanvas.width;
+            if (this.y > globalCanvas.height) this.y = 0;
+            if (this.y < 0) this.y = globalCanvas.height;
+          }
+          draw() {
+            ctx.fillStyle = this.color;
+            ctx.globalAlpha = this.life * 0.8;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        for (let i = 0; i < 60; i++) particles.push(new Particle(null, null, true));
+
+        function connectParticles() {
+          for (let a = 0; a < particles.length; a++) {
+            for (let b = a; b < particles.length; b++) {
+              let dx = particles[a].x - particles[b].x;
+              let dy = particles[a].y - particles[b].y;
+              let distance = Math.sqrt(dx * dx + dy * dy);
+              if (distance < 120) {
+                let opacity = (1 - distance / 120) * 0.3;
+                ctx.strokeStyle = `rgba(255, 107, 53, ${opacity})`;
+                ctx.lineWidth = 0.8;
+                ctx.beginPath();
+                ctx.moveTo(particles[a].x, particles[a].y);
+                ctx.lineTo(particles[b].x, particles[b].y);
+                ctx.stroke();
+              }
+            }
+          }
+        }
+
+        setInterval(() => {
+          particles.push(new Particle());
+        }, 500);
+
+        function animate() {
+          ctx.clearRect(0, 0, globalCanvas.width, globalCanvas.height);
+          for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+            if (!particles[i].isAmbient && particles[i].life <= 0) {
+              particles.splice(i, 1);
+              i--;
+            }
+          }
+          connectParticles();
+          requestAnimationFrame(animate);
+        }
+        animate();
+      }
+    </script>
+  </body>
+</html>

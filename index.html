@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="en-IN" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Sambhav Foundation | AI/ML & Cyber Center</title>
+
+  <script src="https://cdn.tailwindcss.com/"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;600;700&family=Syncopate:wght@400;700&display=swap");
+
+    :root {
+      --neon-orange: #ff6b35;
+      --neon-blue: #00f3ff;
+      --bg-dark: #050505;
+      --glass: rgba(20, 20, 25, 0.8);
+      --glass-border: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+      font-family: "Rajdhani", sans-serif;
+      background-color: var(--bg-dark);
+      color: #ffffff;
+      overflow-x: hidden;
+      /* Custom cursor only for non-touch devices */
+      cursor: none;
+    }
+
+    /* RESTORE CURSOR ON TOUCH DEVICES */
+    @media (hover: none) and (pointer: coarse) {
+      body {
+        cursor: auto !important;
+      }
+
+      .cursor-dot,
+      .cursor-ring {
+        display: none !important;
+      }
+
+      .hero-panel {
+        cursor: pointer;
+      }
+    }
+
+    h1,
+    h2,
+    h3,
+    .brand-font {
+      font-family: "Syncopate", sans-serif;
+    }
+
+    /* =========================================
+         FIXED NAVBAR STYLES
+         ========================================= */
+    .nav-cyber {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      z-index: 9999 !important;
+      background: rgba(5, 5, 8, 0.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 107, 53, 0.3);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+      transition: all 0.3s ease;
+    }
+
+    .nav-cyber::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--neon-orange), transparent);
+      opacity: 0.8;
+    }
+
+    /* UPDATED NAV LINK STYLE (Matches About Page) */
+    .nav-link {
+      position: relative;
+      font-size: 1.1rem;
+      /* Increased from 0.8rem */
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 800;
+      /* Increased from 700 */
+      color: #888;
+      transition: color 0.3s ease;
+      padding: 0.5rem 0;
+    }
+
+    .nav-link:hover {
+      color: #fff;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--neon-orange);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+      box-shadow: 0 0 10px var(--neon-orange);
+    }
+
+    .nav-link:hover::before {
+      width: 100%;
+    }
+
+    /* Tech Button */
+    .btn-cyber {
+      position: relative;
+      background: transparent;
+      border: 1px solid var(--neon-orange);
+      color: var(--neon-orange);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 10px 24px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+    }
+
+    .btn-cyber:hover {
+      background: var(--neon-orange);
+      color: #000;
+      box-shadow: 0 0 30px rgba(255, 107, 53, 0.4);
+    }
+
+    /* MOBILE MENU OVERLAY */
+    #mobileMenu {
+      position: fixed;
+      top: 70px;
+      /* Below navbar */
+      left: 0;
+      width: 100%;
+      height: 0;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(15px);
+      overflow: hidden;
+      z-index: 9998;
+      transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      border-bottom: 1px solid var(--neon-orange);
+    }
+
+    #mobileMenu.active {
+      height: calc(100vh - 70px);
+    }
+
+    /* =========================================
+         PROFESSIONAL PRECISION CURSOR
+         ========================================= */
+    .cursor-dot,
+    .cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Inner Dot: High contrast, precise, white */
+    .cursor-dot {
+      width: 6px;
+      height: 6px;
+      background-color: #ffffff;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+      /* Subtle glow */
+      z-index: 10000;
+      /* Always on top */
+    }
+
+    /* Outer Ring: Thematic, subtle, neon */
+    .cursor-ring {
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(255, 107, 53, 0.6);
+      /* Neon orange, slightly transparent */
+      transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+    }
+
+    /* Hover State: Ring expands and fills slightly */
+    body.hover-active .cursor-ring {
+      width: 50px;
+      height: 50px;
+      background-color: rgba(255, 107, 53, 0.1);
+      border-color: var(--neon-orange);
+      mix-blend-mode: screen;
+      /* Cool effect over dark backgrounds */
+    }
+
+    /* --- BACKGROUND LAYERS --- */
+    .bg-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -50;
+      background: radial-gradient(circle at 50% 50%, rgba(26, 11, 0, 0.85) 0%, rgba(0, 0, 0, 0.95) 100%);
+    }
+
+    .grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -40;
+      background-image: linear-gradient(rgba(255, 107, 53, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 107, 53, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(circle, black 40%, transparent 100%);
+    }
+
+    /* --- Hero Typography --- */
+    .text-liquid-neon {
+      background: linear-gradient(90deg, #ffffff 0%, var(--neon-orange) 20%, #ffffff 40%, var(--neon-orange) 60%, #ffffff 80%, var(--neon-orange) 100%);
+      background-size: 200% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: liquidFlow 4s linear infinite;
+    }
+
+    @keyframes liquidFlow {
+      to {
+        background-position: 200% center;
+      }
+    }
+
+    .text-hollow {
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.6);
+    }
+
+    /* --- CAROUSEL 3D --- */
+    .hero-carousel-scene {
+      perspective: 2000px;
+      height: 400px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+    }
+
+    /* Mobile Scaling for Hero Carousel */
+    @media (max-width: 1024px) {
+      .hero-carousel-scene {
+        transform: scale(0.65);
+        height: 350px;
+        margin-top: -20px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-carousel-scene {
+        transform: scale(0.5);
+        height: 300px;
+      }
+    }
+
+    .hero-carousel-stage {
+      position: relative;
+      width: 240px;
+      height: 360px;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    .hero-panel {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid var(--neon-orange);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(255, 107, 53, 0.2);
+      overflow: hidden;
+      opacity: 0.95;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .hero-panel:hover {
+      border-color: #fff;
+      box-shadow: 0 0 30px rgba(255, 107, 53, 0.6);
+      transform: scale(1.05) translateZ(20px);
+    }
+
+    .hero-panel img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.5;
+      z-index: 0;
+      transition: opacity 0.3s;
+    }
+
+    .hero-panel:hover img {
+      opacity: 0.8;
+    }
+
+    .hero-panel-content {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 1);
+    }
+
+    .carousel-spotlight {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+      filter: blur(80px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* --- COURSES INTERACTIVE --- */
+    .courses-section {
+      padding: 4rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .courses-carousel-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 2000px;
+      height: 850px;
+      margin-top: 2rem;
+      z-index: 1;
+    }
+
+    .courses-track {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .course-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(20, 20, 20, 0.6);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      backdrop-filter: blur(5px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .course-nav-btn:hover {
+      background: var(--neon-orange);
+      border-color: var(--neon-orange);
+      color: black;
+      box-shadow: 0 0 35px rgba(255, 107, 53, 0.6);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .course-nav-btn.prev {
+      left: 30px;
+    }
+
+    .course-nav-btn.next {
+      right: 30px;
+    }
+
+    .course-card {
+      position: absolute;
+      width: 400px;
+      height: 700px;
+      background: #0a0a0a;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+      backface-visibility: hidden;
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8);
+    }
+
+    .card-image-box {
+      height: 40%;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .card-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .course-card:hover .card-image-box img {
+      transform: scale(1.1);
+    }
+
+    .card-image-box::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #0a0a0a 0%, transparent 80%);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 107, 53, 0.5);
+      color: var(--neon-orange);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      z-index: 2;
+    }
+
+    .card-content {
+      height: 60%;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(180deg, rgba(20, 20, 20, 0) 0%, rgba(20, 20, 20, 0.8) 100%);
+    }
+
+    .card-title {
+      font-family: "Syncopate", sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.8rem;
+      line-height: 1.2;
+    }
+
+    .card-desc {
+      font-size: 1rem;
+      color: #999;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: auto;
+    }
+
+    .card-tag {
+      font-size: 0.75rem;
+      color: #ddd;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card-footer {
+      margin-top: 2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--neon-blue);
+    }
+
+    .card-btn {
+      background: white;
+      color: black;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
+
+    .course-card:hover .card-btn {
+      background: var(--neon-orange);
+      box-shadow: 0 0 20px rgba(255, 107, 53, 0.6);
+    }
+
+    .course-card[data-pos="0"] {
+      z-index: 10;
+      transform: translate3d(0, 0, 0) scale(1);
+      opacity: 1;
+      border-color: var(--neon-orange);
+      box-shadow: 0 0 50px rgba(255, 107, 53, 0.2);
+    }
+
+    .course-card[data-pos="1"] {
+      z-index: 9;
+      transform: translate3d(460px, 0, -300px) rotateY(-25deg) scale(0.9);
+      opacity: 0.6;
+      filter: grayscale(0.5) brightness(0.6);
+    }
+
+    .course-card[data-pos="-1"] {
+      z-index: 9;
+      transform: translate3d(-460px, 0, -300px) rotateY(25deg) scale(0.9);
+      opacity: 0.6;
+      filter: grayscale(0.5) brightness(0.6);
+    }
+
+    .course-card[data-pos="2"] {
+      z-index: 8;
+      transform: translate3d(780px, 0, -500px) rotateY(-45deg) scale(0.8);
+      opacity: 0.3;
+      filter: grayscale(1) blur(3px);
+    }
+
+    .course-card[data-pos="-2"] {
+      z-index: 8;
+      transform: translate3d(-780px, 0, -500px) rotateY(45deg) scale(0.8);
+      opacity: 0.3;
+      filter: grayscale(1) blur(3px);
+    }
+
+    .course-card[data-pos="hidden"] {
+      transform: translate3d(0, 0, -1000px) scale(0);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Mobile adjustments for Courses */
+    @media (max-width: 768px) {
+      .courses-carousel-wrapper {
+        height: 600px;
+      }
+
+      .course-card {
+        width: 300px;
+        height: 500px;
+      }
+
+      /* Only show center card clearly on mobile */
+      .course-card[data-pos="1"],
+      .course-card[data-pos="-1"],
+      .course-card[data-pos="2"],
+      .course-card[data-pos="-2"] {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .course-nav-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+        background: rgba(0, 0, 0, 0.8);
+      }
+
+      .course-nav-btn.prev {
+        left: 10px;
+      }
+
+      .course-nav-btn.next {
+        right: 10px;
+      }
+
+      .card-content {
+        padding: 1.5rem;
+      }
+
+      .card-title {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* =========================================
+         SLANTED KINETIC SLICES
+         ========================================= */
+    .slant-section {
+      padding: 6rem 0;
+      background: #080808;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .slant-container {
+      display: flex;
+      height: 600px;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      gap: 4px;
+      transform: skewX(-15deg);
+      padding: 0 2rem;
+    }
+
+    .slant-panel {
+      position: relative;
+      flex: 1;
+      background: #111;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .slant-panel:hover {
+      flex: 4;
+      border-right-color: var(--neon-orange);
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+      z-index: 10;
+    }
+
+    .panel-inner {
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 200%;
+      height: 100%;
+      transform: skewX(15deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .panel-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      filter: grayscale(100%);
+      transition: 0.6s;
+    }
+
+    .slant-panel:hover .panel-bg {
+      opacity: 0.7;
+      filter: grayscale(0%);
+      transform: scale(1.1);
+    }
+
+    .panel-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 0 1rem;
+      opacity: 0.6;
+      transition: 0.4s;
+      /* Ensure clicks pass through if needed, but mainly visual */
+    }
+
+    .slant-panel:hover .panel-content {
+      opacity: 1;
+    }
+
+    .panel-icon {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 1rem;
+      display: inline-block;
+      background: rgba(0, 0, 0, 0.5);
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      border-radius: 50%;
+      border: 1px solid #333;
+    }
+
+    .slant-panel:hover .panel-icon {
+      background: var(--neon-orange);
+      color: #000;
+      border-color: var(--neon-orange);
+    }
+
+    .panel-title {
+      font-family: "Syncopate", sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 1.2rem;
+      color: #fff;
+      white-space: nowrap;
+      margin-bottom: 0.5rem;
+      transition: 0.4s;
+    }
+
+    .panel-desc {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      font-size: 0.9rem;
+      color: #ccc;
+      max-width: 300px;
+      margin: 0 auto;
+      transition: 0.4s ease 0s;
+    }
+
+    .slant-panel:hover .panel-title {
+      font-size: 2rem;
+      color: var(--neon-orange);
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    }
+
+    .slant-panel:hover .panel-desc {
+      max-height: 200px;
+      opacity: 1;
+      margin-top: 1rem;
+      transition-delay: 0.2s;
+    }
+
+    .panel-num {
+      position: absolute;
+      bottom: 2rem;
+      font-family: monospace;
+      font-size: 2rem;
+      color: rgba(255, 255, 255, 0.1);
+      font-weight: bold;
+    }
+
+    .slant-panel:hover .panel-num {
+      color: rgba(255, 107, 53, 0.4);
+    }
+
+    /* Mobile Slant Section */
+    @media (max-width: 1024px) {
+      .slant-container {
+        flex-direction: column;
+        transform: none;
+        height: auto;
+        padding: 0;
+        gap: 0;
+      }
+
+      .slant-panel {
+        height: 120px;
+        transform: none;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .panel-inner {
+        transform: none;
+        left: 0;
+        width: 100%;
+      }
+
+      .slant-panel:hover {
+        height: 350px;
+        flex: none;
+      }
+
+      .panel-title {
+        font-size: 1rem;
+      }
+
+      .slant-panel:hover .panel-title {
+        font-size: 1.5rem;
+        white-space: normal;
+      }
+    }
+
+    /* --- ABOUT SECTION --- */
+    .about-section-container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-bg-decoration {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .about-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--neon-orange) 0%, transparent 70%);
+      filter: blur(100px);
+      opacity: 0.05;
+    }
+
+    .premium-stat-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .premium-stat-card:hover {
+      border-color: var(--neon-orange);
+      background: rgba(255, 107, 53, 0.03);
+      transform: translateY(-5px);
+    }
+
+    .premium-stat-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      transition: 0.5s;
+    }
+
+    .premium-stat-card:hover::after {
+      left: 100%;
+    }
+
+    .about-visual-stack {
+      position: relative;
+      padding: 2rem;
+    }
+
+    .visual-accent {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgba(255, 107, 53, 0.2);
+      border-radius: 2rem;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      transform: rotate(-3deg);
+      transition: all 0.5s ease;
+    }
+
+    .about-visual-stack:hover .visual-accent {
+      transform: rotate(0deg) scale(1.05);
+      border-color: var(--neon-orange);
+    }
+
+    .mission-vision-grid {
+      border-left: 2px solid rgba(255, 255, 255, 0.05);
+      padding-left: 2rem;
+    }
+
+    #globalCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -30;
+      mix-blend-mode: color-dodge;
+    }
+
+    .about-interactive-grid {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 2px 2px, rgba(255, 107, 53, 0.05) 1px, transparent 0);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: -1;
+      mask-image: radial-gradient(circle, black, transparent 80%);
+    }
+
+    /* --- Infinite Scroll --- */
+    .infinite-scroll-container {
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      overflow: hidden;
+      width: 100%;
+      padding-bottom: 20px;
+    }
+
+    .infinite-scroll-track {
+      display: flex;
+      width: max-content;
+      gap: 5rem;
+      animation: scroll 15s linear infinite;
+      align-items: center;
+    }
+
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .partner-icon {
+      height: 40px;
+      width: auto;
+      max-width: 150px;
+      object-fit: contain;
+      filter: brightness(0) invert(1) opacity(0.6);
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    .partner-icon:hover {
+      filter: none;
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .magnetic-wrap {
+      display: inline-block;
+    }
+
+    /* =========================================
+         NEW STYLISH CONTACT SECTION
+         ========================================= */
+    .contact-cyber-wrapper {
+      background: rgba(10, 10, 12, 0.7);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 107, 53, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Left Neon Border */
+    .contact-cyber-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--neon-orange);
+      box-shadow: 0 0 15px var(--neon-orange);
+      z-index: 20;
+    }
+
+    /* Animated Input Fields */
+    .cyber-input-container {
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+
+    .cyber-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #333;
+      padding: 10px 0;
+      color: white;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.1rem;
+      transition: all 0.3s;
+      border-radius: 0;
+    }
+
+    .cyber-input:focus {
+      outline: none;
+      border-bottom-color: var(--neon-orange);
+      box-shadow: 0 1px 0 0 var(--neon-orange);
+    }
+
+    /* Floating Label */
+    .cyber-label {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      color: #666;
+      pointer-events: none;
+      transition: 0.3s ease all;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      font-weight: 600;
+    }
+
+    .cyber-input:focus~.cyber-label,
+    .cyber-input:valid~.cyber-label {
+      top: -15px;
+      color: var(--neon-orange);
+      font-size: 0.7rem;
+    }
+
+    /* Select Hack */
+    select.cyber-input {
+      color: #fff;
+    }
+
+    select.cyber-input option {
+      background: #000;
+    }
+
+    /* Cyber Submit Button */
+    .cyber-submit-btn {
+      background: transparent;
+      border: 1px solid var(--neon-orange);
+      color: var(--neon-orange);
+      padding: 15px 40px;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 3px;
+      position: relative;
+      overflow: hidden;
+      transition: 0.3s;
+      cursor: pointer;
+      clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+    }
+
+    .cyber-submit-btn:hover {
+      background: var(--neon-orange);
+      color: black;
+      box-shadow: 0 0 30px rgba(255, 107, 53, 0.4);
+    }
+
+    .cyber-submit-btn::before {
+      content: ">>";
+      margin-right: 10px;
+      opacity: 0;
+      transition: 0.3s;
+    }
+
+    .cyber-submit-btn:hover::before {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body class="selection:bg-orange-500 selection:text-white">
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <div class="bg-container"></div>
+  <div class="grid-overlay"></div>
+  <canvas id="globalCanvas"></canvas>
+
+  <div id="mobileMenu">
+    <div class="flex flex-col items-center justify-center h-full gap-8 p-6">
+      <a href="#home"
+        class="text-2xl font-bold uppercase tracking-widest text-white hover:text-orange-500 transition mobile-link">Home</a>
+      <a href="#courses"
+        class="text-2xl font-bold uppercase tracking-widest text-white hover:text-orange-500 transition mobile-link">Courses</a>
+      <a href="about.html"
+        class="text-2xl font-bold uppercase tracking-widest text-white hover:text-orange-500 transition mobile-link">About</a>
+      <a href="#facilities"
+        class="text-2xl font-bold uppercase tracking-widest text-white hover:text-orange-500 transition mobile-link">Facilities</a>
+      <a href="#contact"
+        class="text-2xl font-bold uppercase tracking-widest text-white hover:text-orange-500 transition mobile-link">Contact</a>
+
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSf3TifgrN-xKDXHvjTF2yB8ps6-02lbZhcPyoq34xTgILMQPg/viewform"
+        target="_blank" class="px-8 py-3 bg-orange-500 text-black font-bold uppercase tracking-widest mt-4">Enroll
+        Now</a>
+    </div>
+  </div>
+
+  <nav class="nav-cyber" id="navbar">
+    <div class="container mx-auto px-6 py-1 flex justify-between items-center">
+      <a href="index.html" class="flex items-center gap-2">
+        <img src="logo.png" alt="Sambhav Foundation"
+          class="h-16 md:h-20 w-auto object-contain filter drop-shadow-[0_0_5px_rgba(255,107,53,0.5)] transition-transform hover:scale-105">
+      </a>
+
+      <div class="hidden lg:flex items-center gap-10">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#courses" class="nav-link">Courses</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="#facilities" class="nav-link">Facilities</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
+
+      <div class="hidden lg:block">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSf3TifgrN-xKDXHvjTF2yB8ps6-02lbZhcPyoq34xTgILMQPg/viewform?usp=header"
+          target="_blank" class="btn-cyber">
+          Enroll Now
+        </a>
+      </div>
+
+      <button id="mobileToggle" class="lg:hidden text-2xl text-orange-500 hover:text-white transition z-50">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <section id="home" class="min-h-screen relative pt-32 pb-20 overflow-hidden flex items-center">
+    <div class="absolute inset-0 z-0 overflow-hidden">
+      <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-70">
+        <source src="video.mp4" type="video/mp4" />
+      </video>
+      <div class="absolute inset-0 bg-black/40"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-[#050505]"></div>
+    </div>
+
+    <div class="carousel-spotlight hidden lg:block z-0"></div>
+
+    <div class="container mx-auto px-6 z-10 relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-10xl">
+      <div class="text-center lg:text-left lg:pr-24">
+        <div
+          class="inline-flex items-center gap-4 px-4 py-1 mb-9 border border-white/10 rounded-full bg-black/40 backdrop-blur-md">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+          </span>
+          <span class="text-xs tracking-[0.2em] text-gray-300 font-mono">
+            SYSTEM ONLINE • 2026 ADMISSIONS OPEN
+          </span>
+        </div>
+
+        <h1 class="font-bold leading-none mb-8">
+          <span class="block text-xl md:text-2xl tracking-[0.2em] mb-2">
+            EMPOWERING FUTURES WITH
+          </span>
+          <span class="block text-4xl md:text-5xl lg:text-5xl brand-font text-liquid-neon mb-4">
+            EXECELLENCE IT HUB
+          </span>
+          <span class="block text-3xl md:text-5xl text-hollow brand-font opacity-100">
+            TRAINING
+          </span>
+        </h1>
+
+        <p class="text-lg md:text-xl text-gray-100 font-light leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0">
+          Transforming lives through cutting-edge technology education in
+          Banashankari, Bangalore.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
+          <a href="#courses"
+            class="px-10 py-4 bg-orange-500 text-black font-bold tracking-widest hover:bg-white transition text-center">
+            EXPLORE COURSES
+          </a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSf3TifgrN-xKDXHvjTF2yB8ps6-02lbZhcPyoq34xTgILMQPg/viewform"
+            target="_blank"
+            class="px-10 py-4 border-2 border-white/20 font-bold tracking-widest hover:border-orange-500 hover:text-orange-500 transition text-center">
+            ENROLL NOW
+          </a>
+        </div>
+      </div>
+
+      <div class="flex justify-center items-center relative mt-12 lg:mt-0">
+        <div class="hero-carousel-scene">
+          <div class="hero-carousel-stage" id="heroCarousel"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 z-20">
+      <span class="text-[10px] tracking-widest uppercase">Scroll</span>
+      <div class="w-[1px] h-12 bg-gradient-to-b from-orange-500 to-transparent"></div>
+    </div>
+  </section>
+
+  <section class="courses-section" id="courses">
+    <div class="courses-container">
+      <div class="container mx-auto px-6 text-center">
+        <span class="text-orange-500 tracking-widest uppercase text-sm font-bold">Academic Programs</span>
+        <h2 class="text-3xl md:text-6xl font-bold mt-2 text-white">
+          OUR
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-600">COURSES</span>
+        </h2>
+        <p class="max-w-2xl mx-auto text-gray-400 mt-4">
+          Browse our advanced curriculum designed for the modern digital era.
+        </p>
+      </div>
+
+      <div class="courses-carousel-wrapper">
+        <button class="course-nav-btn prev">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="courses-track" id="coursesTrack"></div>
+        <button class="course-nav-btn next">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section id="facilities" class="slant-section">
+    <div class="container mx-auto px-6 mb-12 text-center">
+      <h2 class="text-3xl md:text-5xl font-bold brand-font text-white uppercase tracking-tighter">
+        INFRA<span class="text-orange-500">STRUCTURE</span>
+      </h2>
+      <p class="text-gray-500 mt-2 font-mono text-xs uppercase tracking-[0.5em]">
+        Select Node to Expand
+      </p>
+    </div>
+
+    <div class="slant-container">
+
+      <div class="slant-panel">
+        <div class="panel-inner">
+          <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800"
+            class="panel-bg" alt="Lab">
+          <div class="panel-content">
+            <div class="panel-icon"><i class="fas fa-flask"></i></div>
+            <h3 class="panel-title">Innovation Forge</h3>
+            <p class="panel-desc">A dynamic makerspace equipped for rapid prototyping, IoT experimentation, and robotic
+              process automation.</p>
+          </div>
+          <span class="panel-num">01</span>
+        </div>
+      </div>
+
+      <div class="slant-panel">
+        <div class="panel-inner">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=800"
+            class="panel-bg" alt="Power">
+          <div class="panel-content">
+            <div class="panel-icon"><i class="fas fa-bolt"></i></div>
+            <h3 class="panel-title">Active Grid</h3>
+            <p class="panel-desc">Redundant power systems ensuring 24/7 uptime for critical research operations.</p>
+          </div>
+          <span class="panel-num">02</span>
+        </div>
+      </div>
+
+      <div class="slant-panel">
+        <div class="panel-inner">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800"
+            class="panel-bg" alt="Wifi">
+          <div class="panel-content">
+            <div class="panel-icon"><i class="fas fa-wifi"></i></div>
+            <h3 class="panel-title">Hyper Mesh</h3>
+            <p class="panel-desc">Gigabit optical fiber network with campus-wide Wi-Fi 6 low-latency zones.</p>
+          </div>
+          <span class="panel-num">03</span>
+        </div>
+      </div>
+
+      <div class="slant-panel">
+        <div class="panel-inner">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
+            class="panel-bg" alt="Class">
+          <div class="panel-content">
+            <div class="panel-icon"><i class="fas fa-vr-cardboard"></i></div>
+            <h3 class="panel-title">Smart Pods</h3>
+            <p class="panel-desc">Immersive learning environments equipped with 4K interactive displays.</p>
+          </div>
+          <span class="panel-num">04</span>
+        </div>
+      </div>
+
+      <div class="slant-panel">
+        <div class="panel-inner">
+          <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&q=80&w=800"
+            class="panel-bg" alt="Library">
+          <div class="panel-content">
+            <div class="panel-icon"><i class="fas fa-globe-americas"></i></div>
+            <h3 class="panel-title">Knowledge Grid</h3>
+            <p class="panel-desc">Real-time digital repository linking learners to global research papers, industry case
+              studies, and live project data.</p>
+          </div>
+          <span class="panel-num">05</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="about" class="py-20 lg:py-32 relative overflow-hidden about-section-container">
+    <div class="about-interactive-grid" id="aboutGrid"></div>
+
+    <div class="about-bg-decoration">
+      <div class="about-circle w-[300px] lg:w-[500px] h-[300px] lg:h-[500px] -top-24 -left-24"></div>
+      <div class="about-circle w-[250px] lg:w-[400px] h-[250px] lg:h-[400px] -bottom-24 -right-24"></div>
+    </div>
+
+    <div class="container mx-auto px-6">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div class="lg:col-span-7 space-y-12">
+          <div class="space-y-6">
+            <div class="flex items-center gap-4">
+              <div class="h-[1px] w-12 bg-orange-500"></div>
+              <span class="text-orange-500 font-bold tracking-[0.3em] uppercase text-xs">Innovation & Impact</span>
+            </div>
+            <h2 class="text-4xl md:text-7xl font-bold brand-font leading-tight">
+              ABOUT <br />
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-orange-500">SAMBHAV</span>
+            </h2>
+            <p
+              class="text-gray-400 leading-relaxed text-lg lg:text-xl font-light max-w-2xl border-l-2 border-orange-500/30 pl-6">
+              Empowering communities through skill development, education, and
+              livelihood programs across India. We bridge the gap between
+              talent and opportunity.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div class="premium-stat-card p-10 rounded-3xl group">
+              <div class="text-orange-500 text-sm font-bold tracking-widest uppercase mb-4 opacity-60">
+                Impact Scale
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span class="text-6xl font-bold text-white counter" data-target="2.7">0</span>
+                <span class="text-2xl font-bold text-orange-500">M+</span>
+              </div>
+              <div class="text-gray-500 mt-2 font-medium">Million Lives</div>
+            </div>
+
+            <div class="premium-stat-card p-10 rounded-3xl group">
+              <div class="text-orange-500 text-sm font-bold tracking-widest uppercase mb-4 opacity-60">
+                Career Growth
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span class="text-6xl font-bold text-white counter" data-target="100">0</span>
+                <span class="text-2xl font-bold text-orange-500">%</span>
+              </div>
+              <div class="text-gray-500 mt-2 font-medium">Placement %</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="mission-vision-grid space-y-10">
+            <div class="group">
+              <div class="flex items-start gap-6">
+                <div
+                  class="w-14 h-14 min-w-[3.5rem] rounded-2xl bg-orange-500/10 flex items-center justify-center text-orange-500 border border-orange-500/20 group-hover:bg-orange-500 group-hover:text-black transition-all duration-500 shadow-lg shadow-orange-500/5">
+                  <i class="fas fa-bullseye text-2xl"></i>
+                </div>
+                <div class="space-y-3">
+                  <h3 class="text-xl md:text-2xl font-bold text-white tracking-wide">
+                    OUR MISSION
+                  </h3>
+                  <p class="text-gray-400 text-sm leading-relaxed font-light line-clamp-3">
+                    To envision a more equitable future where everyone has a
+                    chance to prosper through sustainable livelihoods.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="group">
+              <div class="flex items-start gap-6">
+                <div
+                  class="w-14 h-14 min-w-[3.5rem] rounded-2xl bg-orange-500/10 flex items-center justify-center text-orange-500 border border-orange-500/20 group-hover:bg-orange-500 group-hover:text-black transition-all duration-500 shadow-lg shadow-orange-500/5">
+                  <i class="fas fa-eye text-2xl"></i>
+                </div>
+                <div class="space-y-3">
+                  <h3 class="text-xl md:text-2xl font-bold text-white tracking-wide">
+                    OUR VISION
+                  </h3>
+                  <p class="text-gray-400 text-sm leading-relaxed font-light line-clamp-3">
+                    A world where underserved populations have access to
+                    opportunities that enable them to thrive.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="about-visual-stack mt-12 hidden md:block">
+              <div class="visual-accent"></div>
+              <div class="rounded-3xl overflow-hidden h-72 relative group">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80"
+                  alt="Empowerment"
+                  class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-10 border-y border-white/5 bg-black/50">
+    <div class="container mx-auto px-6 mb-8">
+      <h4 class="text-center text-sm font-bold text-gray-300 tracking-widest uppercase">
+        Placement Partners
+      </h4>
+    </div>
+    <div class="infinite-scroll-container">
+      <div class="infinite-scroll-track">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google"
+          class="partner-icon" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon"
+          class="partner-icon" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg" alt="Microsoft"
+          class="partner-icon" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg" alt="Infosys"
+          class="partner-icon" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/24-7_Inc_Logo.jpg" alt="[24]7.ai"
+          class="partner-icon" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg" alt="Accenture"
+          class="partner-icon" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Concentrix_logo.svg" alt="Concentrix"
+          class="partner-icon" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Deloitte.svg" alt="Deloitte"
+          class="partner-icon" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google"
+          class="partner-icon" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon"
+          class="partner-icon" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg" alt="Microsoft"
+          class="partner-icon" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg" alt="Infosys"
+          class="partner-icon" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/24-7_Inc_Logo.jpg" alt="[24]7.ai"
+          class="partner-icon" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Accenture.svg" alt="Accenture"
+          class="partner-icon" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Concentrix_logo.svg" alt="Concentrix"
+          class="partner-icon" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Deloitte.svg" alt="Deloitte"
+          class="partner-icon" />
+      </div>
+  </section>
+
+  <section id="contact" class="py-20 lg:py-32 relative overflow-hidden">
+    <div
+      class="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-orange-500/5 to-transparent pointer-events-none">
+    </div>
+
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="contact-cyber-wrapper rounded-3xl shadow-2xl">
+        <div class="grid lg:grid-cols-5 gap-0">
+
+          <div class="lg:col-span-2 p-8 lg:p-10 flex flex-col justify-between relative overflow-hidden bg-black/60">
+            <div
+              class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none">
+            </div>
+
+            <div class="relative z-10">
+              <h2 class="text-3xl lg:text-4xl font-bold mb-2 text-white">GET IN <span
+                  class="text-orange-500">TOUCH</span></h2>
+              <p class="text-gray-400 text-sm mb-10 tracking-wider">INITIATE COMMUNICATION PROTOCOL</p>
+
+              <div class="space-y-8">
+                <div class="flex items-start gap-4">
+                  <div
+                    class="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-500 border border-orange-500/30 shrink-0">
+                    <i class="fas fa-map-marker-alt"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-white font-bold text-sm tracking-widest uppercase">Headquarters</h4>
+                    <p class="text-gray-400 text-sm mt-1">
+                      Bengaluru , Karnataka , India
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div
+                    class="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-500 border border-orange-500/30 shrink-0">
+                    <i class="fas fa-phone-alt"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-white font-bold text-sm tracking-widest uppercase">Call Us</h4>
+                    <p class="text-gray-400 text-sm mt-1">+91 7259040838</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div
+                    class="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-500 border border-orange-500/30 shrink-0">
+                    <i class="fas fa-envelope"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-white font-bold text-sm tracking-widest uppercase">Email Us</h4>
+                    <p class="text-gray-400 text-sm mt-1 break-all">rajmahmad.pasha@mysambhav.org</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="relative z-10 mt-10">
+              <div class="p-4 border border-white/10 rounded-lg bg-black/40">
+                <div class="flex items-center gap-2 mb-2">
+                  <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span class="text-xs text-green-500 font-mono">SYSTEM STATUS: ONLINE</span>
+                </div>
+                <p class="text-[10px] text-gray-500 font-mono">
+                  Response time: &lt; 24 Hours<br>
+                  Encrypted Connection: Secure
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-3 p-8 lg:p-16 bg-black/30">
+            <form id="contactForm">
+              <div class="cyber-input-container">
+                <input type="text" id="name" class="cyber-input" required placeholder=" " />
+                <label for="name" class="cyber-label">Enter Full Name</label>
+              </div>
+
+              <div class="cyber-input-container">
+                <input type="email" id="email" class="cyber-input" required placeholder=" " />
+                <label for="email" class="cyber-label">Email Address</label>
+              </div>
+
+              <div class="cyber-input-container">
+                <select id="interest" class="cyber-input" required>
+                  <option value="" disabled selected></option>
+                  <option value="AI/ML">AI/ML</option>
+                  <option value="Cybersecurity">Cybersecurity</option>
+                  <option value="Data Analytics">Data Analytics</option>
+                </select>
+                <label for="interest" class="cyber-label">Select Course Interest</label>
+              </div>
+
+              <div class="cyber-input-container">
+                <textarea id="message" rows="2" class="cyber-input" required placeholder=" "></textarea>
+                <label for="message" class="cyber-label">Your Message</label>
+              </div>
+
+              <button type="button" onclick="sendToGmail()" class="cyber-submit-btn mt-6 w-full md:w-auto">
+                Transmit Message
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-8 border-t border-white/5 text-center text-gray-600 text-xs tracking-widest uppercase">
+    <p>&copy; 2026 Sambhav Foundation. Architecting the Future.</p>
+  </footer>
+
+  <script>
+    // 1. MOBILE MENU LOGIC
+    const mobileToggle = document.getElementById("mobileToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const mobileLinks = document.querySelectorAll(".mobile-link");
+
+    mobileToggle.addEventListener("click", () => {
+      mobileMenu.classList.toggle("active");
+      const icon = mobileToggle.querySelector("i");
+      if (mobileMenu.classList.contains("active")) {
+        icon.classList.remove("fa-bars");
+        icon.classList.add("fa-times");
+      } else {
+        icon.classList.remove("fa-times");
+        icon.classList.add("fa-bars");
+      }
+    });
+
+    // Close menu when clicking a link
+    mobileLinks.forEach(link => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("active");
+        mobileToggle.querySelector("i").classList.remove("fa-times");
+        mobileToggle.querySelector("i").classList.add("fa-bars");
+      });
+    });
+
+
+    // CONFIG: Courses Data
+    const courses = [
+      {
+        title: "Data Analytics & BI",
+        desc: "Learn to visualize data with PowerBI, SQL, and Python. Make data-driven decisions.",
+        duration: "3 Months",
+        level: "Advanced",
+        tags: ["SQL", "Python", "Tableau"],
+        img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600",
+      },
+      {
+        title: "Digital Marketing",
+        desc: "Master SEO, Google Ads, and Social Media strategies to drive brand growth.",
+        duration: "3 Months",
+        level: "Intermediate",
+        tags: ["SEO", "SEM", "Growth"],
+        img: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&q=80&w=600",
+      },
+      {
+        title: "Cyber Security Ops",
+        desc: "Defend against threats with Ethical Hacking, Network Security, and Risk Management.",
+        duration: "4 Months",
+        level: "Expert",
+        tags: ["Ethical Hacking", "Defense"],
+        img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600",
+      },
+      {
+        title: "AI Productivity and Application",
+        desc: "Build the future with Neural Networks, TensorFlow, and Python-based ML models.",
+        duration: "6 Months",
+        level: "Advanced",
+        tags: ["Python", "TensorFlow"],
+        img: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=600",
+      },
+      {
+        title: "Retail Sales Assosiative",
+        desc: "Develop advanced negotiation, merchandising, and CRM skills for modern retail.",
+        duration: "2 Months",
+        level: "Beginner",
+        tags: ["Sales", "CRM", "Comm"],
+        img: "https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&q=80&w=600",
+      },
+      {
+        title: "Chat Executive With AI",
+        desc: "Boost productivity using ChatGPT, Midjourney, and prompt engineering.",
+        duration: "2 Months",
+        level: "Beginner",
+        tags: ["Prompt Eng", "Automation"],
+        img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600",
+      },
+      {
+        title: "Data Entry Operater",
+        desc: "Achieve 99% accuracy and high speed. Master Excel and database management.",
+        duration: "1 Month",
+        level: "Beginner",
+        tags: ["Excel", "Typing"],
+        img: "https://images.unsplash.com/photo-1587614382346-4ec70e388b28?auto=format&fit=crop&q=80&w=600",
+      },
+      {
+        title: "CRM With Ai (Voice & Chat)",
+        desc: "Handle customer queries efficiently using AI-assisted support tools.",
+        duration: "2 Months",
+        level: "Intermediate",
+        tags: ["Support", "BPO"],
+        img: "https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&q=80&w=600",
+      },
+    ];
+
+    const coursePageMap = {
+      "Data Analytics & BI": "data_analytics.html",
+      "Digital Marketing": "digital_marketing.html",
+      "Cyber Security Ops": "cybersecurity.html",
+      "AI Productivity and Application": "aiml.html",
+      "Retail Sales Assosiative": "retail_sale.html",
+      "Chat Executive With AI": "generative_ai.html",
+      "Data Entry Operater": "data_entry.html",
+      "CRM With Ai (Voice & Chat)": "crmpage.html",
+    };
+
+    // --- 2. HERO CAROUSEL LOGIC ---
+    const heroStage = document.getElementById("heroCarousel");
+    const heroRadius = 320;
+    let heroAngle = 0;
+    let heroHover = false;
+
+    if (heroStage) {
+      courses.forEach((course, i) => {
+        const el = document.createElement("div");
+        el.className = "hero-panel";
+        const theta = (360 / courses.length) * i;
+        el.style.transform = `rotateY(${theta}deg) translateZ(${heroRadius}px)`;
+        const targetPage = coursePageMap[course.title] || "#courses";
+
+        el.innerHTML = `
+              <img src="${course.img}" alt="${course.title}">
+              <div class="hero-panel-content">
+                <h3 class="text-xl font-bold text-white mb-2">${course.title}</h3>
+                <p class="text-[10px] text-gray-300 mb-2">${course.duration}</p>
+              </div>
+            `;
+
+        el.addEventListener("click", () => {
+          window.location.href = targetPage;
+        });
+
+        heroStage.appendChild(el);
+      });
+
+      // Disable rotation pause on mobile touch
+      heroStage.addEventListener("mouseenter", () => (heroHover = true));
+      heroStage.addEventListener("mouseleave", () => (heroHover = false));
+
+      function rotateHero() {
+        if (!heroHover) {
+          heroAngle -= 0.2;
+          heroStage.style.transform = `rotateY(${heroAngle}deg)`;
+        }
+        requestAnimationFrame(rotateHero);
+      }
+      rotateHero();
+    }
+
+    // --- 3. COURSES CAROUSEL LOGIC ---
+    document.addEventListener("DOMContentLoaded", () => {
+      const coursesTrack = document.getElementById("coursesTrack");
+      const coursePrevBtn = document.querySelector(".course-nav-btn.prev");
+      const courseNextBtn = document.querySelector(".course-nav-btn.next");
+
+      if (coursesTrack && coursePrevBtn && courseNextBtn) {
+        // 1. Generate Cards
+        courses.forEach((course, index) => {
+          const card = document.createElement("div");
+          card.className = "course-card";
+
+          const targetPage = coursePageMap[course.title] || "#contact";
+          card.setAttribute(
+            "onclick",
+            `window.location.href='${targetPage}'`
+          );
+
+          const tagsHtml = course.tags
+            .map((t) => `<span class="card-tag">${t}</span>`)
+            .join("");
+
+          card.innerHTML = `
+                        <div class="card-image-box">
+                            <span class="card-badge">${course.duration}</span>
+                            <img src="${course.img}" alt="${course.title}">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">${course.title}</h3>
+                            <p class="card-desc">${course.desc}</p>
+                            <div class="card-tags">${tagsHtml}</div>
+                            <div class="card-footer">
+                                <span class="card-meta"><i class="fas fa-signal"></i> ${course.level}</span>
+                                <span class="card-btn">Explore More</span>
+                            </div>
+                        </div>
+                    `;
+          coursesTrack.appendChild(card);
+        });
+
+        // 2. Rotation Logic
+        const cards = Array.from(
+          coursesTrack.querySelectorAll(".course-card")
+        );
+        let centerIndex = 0;
+
+        const updateCoursesCarousel = () => {
+          cards.forEach((card, index) => {
+            let relativePos = index - centerIndex;
+            const len = cards.length;
+
+            // Circular Wrap Math
+            if (relativePos > len / 2) relativePos -= len;
+            if (relativePos <= -len / 2) relativePos += len;
+
+            // Assign Positions
+            if (relativePos === 0) card.setAttribute("data-pos", "0");
+            else if (relativePos === 1) card.setAttribute("data-pos", "1");
+            else if (relativePos === 2) card.setAttribute("data-pos", "2");
+            else if (relativePos === -1) card.setAttribute("data-pos", "-1");
+            else if (relativePos === -2) card.setAttribute("data-pos", "-2");
+            else card.setAttribute("data-pos", "hidden");
+          });
+        };
+
+        const rotateNext = () => {
+          centerIndex = (centerIndex + 1) % cards.length;
+          updateCoursesCarousel();
+        };
+        const rotatePrev = () => {
+          centerIndex = (centerIndex - 1 + cards.length) % cards.length;
+          updateCoursesCarousel();
+        };
+
+        courseNextBtn.addEventListener("click", rotateNext);
+        coursePrevBtn.addEventListener("click", rotatePrev);
+
+        // Init
+        updateCoursesCarousel();
+
+        // Auto Play
+        let rotateInterval = setInterval(rotateNext, 4000);
+        const wrapper = document.querySelector(".courses-carousel-wrapper");
+        wrapper.addEventListener("mouseenter", () =>
+          clearInterval(rotateInterval)
+        );
+        wrapper.addEventListener("mouseleave", () => {
+          rotateInterval = setInterval(rotateNext, 4000);
+        });
+      }
+    });
+
+    // --- 4. PROFESSIONAL PRECISION CURSOR LOGIC ---
+    const cursorDot = document.querySelector(".cursor-dot");
+    const cursorRing = document.querySelector(".cursor-ring");
+    let mouseX = 0;
+    let mouseY = 0;
+
+    // Only run cursor logic on non-touch devices
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    if (!isTouchDevice) {
+      window.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        // 1. The Main Dot (Instant for precision)
+        gsap.to(cursorDot, {
+          x: mouseX,
+          y: mouseY,
+          duration: 0.1, // Near instant
+          ease: "power2.out"
+        });
+
+        // 2. The Outer Ring (Smooth drag)
+        gsap.to(cursorRing, {
+          x: mouseX,
+          y: mouseY,
+          duration: 0.5,
+          ease: "power2.out"
+        });
+      });
+
+      // Hover Logic (Scale Ring)
+      const interactiveElements = document.querySelectorAll(
+        "a, button, .course-card, input, select, textarea, .partner-icon, .slant-panel"
+      );
+
+      interactiveElements.forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          document.body.classList.add("hover-active");
+        });
+        el.addEventListener("mouseleave", () => {
+          document.body.classList.remove("hover-active");
+        });
+      });
+    }
+
+    function sendToGmail() {
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const interest = document.getElementById("interest").value;
+      const msg = document.getElementById("message").value;
+      window.open(
+        `https://mail.google.com/mail/?view=cm&fs=1&to=jayanth.j@thesambhav.org&su=Inquiry:${interest}&body=Name:${name}%0AEmail:${email}%0AMessage:${msg}`
+      );
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+    document.querySelectorAll(".counter").forEach((counter) => {
+      const target = parseFloat(counter.getAttribute("data-target"));
+      ScrollTrigger.create({
+        trigger: counter,
+        start: "top 85%",
+        onEnter: () => {
+          let obj = { val: 0 };
+          gsap.to(obj, {
+            val: target,
+            duration: 2,
+            ease: "power2.out",
+            onUpdate: () => {
+              counter.innerText =
+                target % 1 === 0 ? Math.ceil(obj.val) : obj.val.toFixed(1);
+            },
+          });
+        },
+      });
+    });
+
+    // --- 6. Global Neural Hallucination Background ---
+    const globalCanvas = document.getElementById("globalCanvas");
+    if (globalCanvas) {
+      const ctx = globalCanvas.getContext("2d");
+      let particles = [];
+      let mouse = { x: -100, y: -100 };
+
+      function resizeCanvas() {
+        globalCanvas.width = window.innerWidth;
+        globalCanvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      class Particle {
+        constructor(x, y, isAmbient = false) {
+          this.x = x || Math.random() * globalCanvas.width;
+          this.y = y || Math.random() * globalCanvas.height;
+          this.size = Math.random() * (isAmbient ? 2 : 3.5) + 0.8;
+          this.speedX = (Math.random() * 1 - 0.5) * (isAmbient ? 0.3 : 0.8);
+          this.speedY = (Math.random() * 1 - 0.5) * (isAmbient ? 0.3 : 0.8);
+          this.life = isAmbient ? 1 : 1;
+          this.decay = isAmbient ? 0 : Math.random() * 0.01 + 0.005;
+          this.color = `hsla(${Math.random() * 25 + 15}, 100%, 70%, 0.9)`;
+          this.isAmbient = isAmbient;
+        }
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          if (!this.isAmbient) this.life -= this.decay;
+
+          if (this.x > globalCanvas.width) this.x = 0;
+          if (this.x < 0) this.x = globalCanvas.width;
+          if (this.y > globalCanvas.height) this.y = 0;
+          if (this.y < 0) this.y = globalCanvas.height;
+        }
+        draw() {
+          ctx.fillStyle = this.color;
+          ctx.globalAlpha = this.life * 0.8;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Create background ambient particles - Increased count
+      for (let i = 0; i < 80; i++)
+        particles.push(new Particle(null, null, true));
+
+      function connectParticles() {
+        for (let a = 0; a < particles.length; a++) {
+          for (let b = a; b < particles.length; b++) {
+            let dx = particles[a].x - particles[b].x;
+            let dy = particles[a].y - particles[b].y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 150) {
+              let opacity = (1 - distance / 150) * 0.35;
+              ctx.strokeStyle = `rgba(255, 107, 53, ${opacity})`;
+              ctx.lineWidth = 0.8;
+              ctx.beginPath();
+              ctx.moveTo(particles[a].x, particles[a].y);
+              ctx.lineTo(particles[b].x, particles[b].y);
+              ctx.stroke();
+            }
+          }
+        }
+      }
+
+      if (!isTouchDevice) {
+        window.addEventListener("mousemove", (e) => {
+          mouse.x = e.clientX;
+          mouse.y = e.clientY;
+        });
+      }
+
+      // Auto Spawn Ghost Particles Less Frequently on Mobile
+      setInterval(() => {
+        const x = Math.random() * globalCanvas.width;
+        const y = Math.random() * globalCanvas.height;
+        particles.push(new Particle(x, y));
+      }, isTouchDevice ? 600 : 300);
+
+      function animate() {
+        ctx.clearRect(0, 0, globalCanvas.width, globalCanvas.height);
+        for (let i = 0; i < particles.length; i++) {
+          particles[i].update();
+          particles[i].draw();
+          if (!particles[i].isAmbient && particles[i].life <= 0) {
+            particles.splice(i, 1);
+            i--;
+          }
+        }
+        connectParticles();
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // Section Parallax (Disable on mobile for performance)
+    const aboutSection = document.getElementById("about");
+    const aboutGrid = document.getElementById("aboutGrid");
+    if (aboutSection && aboutGrid && !isTouchDevice) {
+      window.addEventListener("mousemove", (e) => {
+        const rect = aboutSection.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        if (y > 0 && y < rect.height) {
+          const moveX = (e.clientX - window.innerWidth / 2) * 0.02;
+          const moveY = (e.clientY - window.innerHeight / 2) * 0.02;
+          aboutGrid.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>
